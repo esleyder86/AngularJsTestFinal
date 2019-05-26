@@ -1,0 +1,83 @@
+<div ng-controller="FormController" id="wrapForm">
+
+    <form class="ui form" name="frm" ng-submit="addUserInfo()" ng-hide="users.length >=1">
+
+        <div class="field">
+            <label id="label" class="control-label">Nombre:</label>
+            <input type="text" class="form-control" name="username" ng-model="user.nombre"
+                placeholder="Ingrese su nombre" autocomplete="off" required />
+        </div>
+
+        <div class="field">
+            <label id="label" class="control-label">Fecha de nacimiento:</label>
+            <input type="date" ng-model="user.fechaNacimiento" data-date="" data-date-format="DD MMMM YYYY">
+        </div>
+
+
+        <div class="field">
+            <label id="label">Sexo: </label>
+            Masculino <input type="radio" name="gender" ng-model="user.genero" value="Masculino" required>
+            Femenino <input type="radio" name="gender" ng-model="user.genero" value="Femenino" required>
+            <!--             <span class="msg" ng-show="frm.gender.$error.required">Seleccione</span> -->
+        </div>
+
+        <div class="field">
+            <label id="label" class="control-label">¿Que es lo que más te gusta?</label>
+
+            <select data-ng-options="o.name for o in likes" class="form-control" ng-model="user.item" required
+                ng-change="changeLikes()"></select>
+            <span class="msg" ng-show="frm.cont.$error.required">Select a value</span>
+        </div>
+
+        <label ng-repeat="like in likesApi ">
+            <div ng-if="user.item.id === 1">
+                <input type="checkbox" ng-model="likesChoosed" size="10" checklist-value="like.num_opp" ng-change="getLikesChecked(like.readable_des)" />
+
+                {{like.readable_des}}
+            </div>
+            <div ng-if="user.item.id === 2">
+                <input type="checkbox" ng-model="likesChoosed" size="10" checklist-value="like.rank_num" ng-change="getLikesChecked(like.title)"/>
+                
+                {{like.title}}
+            </div>
+
+        </label>
+<br>
+
+        <button class="ui primary button" >
+            Guardar
+        </button>
+
+    </form>
+
+    <div class="infoUser"  ng-show="users.length >=1">
+        <div class="info_saved">
+            <h2 style="text-align: center; padding: 1em">Información del usuario</h2>
+            <div class="info_" style="margin: 6px auto">
+                  <label>Nombre:</label>
+                  <h3>{{user.nombre}}</h3>  
+            </div>
+            <div class="info_" style="margin: 6px auto">
+                    <label>Fecha de nacimiento:</label>
+                    <h3>{{user.fechaNacimiento}}</h3>  
+              </div>
+              <div class="info_" style="margin: 6px auto">
+                    <label>Sexo:</label>
+                    <h3>{{user.genero}}</h3>  
+              </div>
+              <div class="info_" style="margin:6px auto">
+                    <label>Tus gustos:</label>
+                    <h3>{{user.item.name}}</h3>  
+              </div>
+
+              <div class="info_" style="margin:6px auto">
+                    <label>Seleccionados:</label>
+                    <div ng-repeat="likeC in likesChoosed">
+                            <h3>{{likeC}}</h3>
+                    </div>  
+              </div>
+
+              
+        </div>
+    </div>
+</div>
